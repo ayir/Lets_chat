@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.example.riyasharma.mychat"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            exclude 'org/jivesoftware/smack/proxy/AbstractXMPPConnection.class'
+            exclude '**/AbstractXMPPConnection.class'
+        }
+    }
+    androidTest {
+        java {
+            exclude '**/AbstractXMPPConnection.class'
+            exclude 'org/jivesoftware/smack/proxy/AbstractXMPPConnection.class'
+
+        }
+    }
+}
+
+configurations {
+    all*.exclude group: 'org.jivesoftware.smack.proxy.AbstractXMPPConnection.class'
+}
+
+
+
+
+
+
+
+
+dependencies {
+
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+    compile "org.igniterealtime.smack:smack-android:4.1.0-rc1"
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'co.devcenter.square:android-ui-library:0.1'
+    // Optional for XMPPTCPConnection
+    compile "org.igniterealtime.smack:smack-tcp:4.1.0-rc1"
+    // Optional for XMPP-IM (RFC 6121) support (Roster, Threaded Chats, …)
+    compile "org.igniterealtime.smack:smack-im:4.1.0-rc1"
+    // Optional for XMPP extensions support
+    compile "org.igniterealtime.smack:smack-extensions:4.1.0-rc1"
+}
